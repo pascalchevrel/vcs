@@ -18,24 +18,27 @@ class Subversion extends Base
     {
         $commits = [];
 
+        // Remove empty lines
+        $log = array_values(array_filter($log));
+
         for ($i = 0, $lines = count($log); $i < $lines; $i++) {
-            if (!strncmp($log[$i], '----', strlen('----'))) {
+
+            // Skip separator
+            if (! strncmp($log[$i], '----', strlen('----'))) {
                 continue;
             }
-
-            if (!strncmp($log[$i], 'r', strlen('r'))) {
+            // Line starts with r and has pipes (|), it contains data
+            if (! strncmp($log[$i], 'r', strlen('r')) && strstr($log[$i], '|')) {
                 $tmp  = explode('|', $log[$i]);
                 $tmp  = array_map('trim', $tmp);
                 $date = trim(preg_replace('~\(([:alpha]*.+)\)~i', '', $tmp[2]));
                 $commits[] = [
-                    'commit'  => ltrim ($tmp[0],'r'),
+                    'commit'  => ltrim($tmp[0],'r'),
                     'author'  => $tmp[1],
                     'email'   => $tmp[1],
                     'date'    => DateTime::createFromFormat('Y-m-d H:i:s O', $date),
-                    'summary' => $log[$i+2]
+                    'summary' => $log[$i+1],
                 ];
-                //Jump to next commit
-                $i = $i + 2;
             }
         }
 
