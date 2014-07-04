@@ -16,11 +16,11 @@ class Base
     {
         $cwd = getcwd();
         chdir($this->repositoryPath);
-        exec($command, $output, $returnValue);
+        exec($command, $output, $returnCode);
         chdir($cwd);
 
-        if ($returnValue !== 0) {
-            error_log("error");
+        if ($returnCode !== 0) {
+            error_log("Error with command {$command} launched in {$this->repositoryPath}");
         }
 
         return $output;
@@ -44,6 +44,10 @@ class Base
                 // John Doe <john@doe.com>
                     $email = str_replace(['<', '>'], '', $matches[0]);
                     $author = explode('<', $tmp[1])[0];
+                } elseif (preg_match('~\(([:alpha]*.+)\)~', $tmp[1], $matches)) {
+                // John Doe (john@doe.com)
+                    $email = str_replace(['(', ')'], '', $matches[0]);
+                    $author = explode('(', $tmp[1])[0];
                 } elseif (preg_match('~([:alpha]*.+)~', $tmp[1], $matches)) {
                 // John Doe john@doe.com
                     $email = $matches[0];
