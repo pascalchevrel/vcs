@@ -14,7 +14,7 @@ class Subversion extends Base
         return $this->parseLog($log);
     }
 
-    protected function parseLog($log)
+    public function parseLog($log)
     {
         $commits = [];
 

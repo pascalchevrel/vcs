@@ -26,7 +26,7 @@ class Base
         return $output;
     }
 
-    protected function parseLog($log)
+    public function parseLog($log)
     {
         for ($i = 0, $lines = count($log); $i < $lines; $i++) {
             $tmp = explode(': ', $log[$i]);
