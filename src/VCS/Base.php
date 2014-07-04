@@ -39,7 +39,7 @@ class Base
                 if (! strstr($tmp[1], '@')) {
                 // No email in User field
                     $author = $tmp[1];
-                    $email = 'Unknown email';
+                    $email = 'Unknown';
                 } elseif (preg_match('~<([:alpha]*.+)>~', $tmp[1], $matches)) {
                 // John Doe <john@doe.com>
                     $email = str_replace(['<', '>'], '', $matches[0]);
@@ -55,12 +55,12 @@ class Base
 
                 // john@doe.com
                     if ($author == '') {
-                        $author = 'Unknown author';
+                        $author = $email;
                     }
                 } else {
                 // Fallback
-                    $email  = 'Unknown email';
-                    $author = 'Unknown author';
+                    $email  = 'Unknown';
+                    $author = 'Unknown';
                 }
 
                 $email = trim($email);
