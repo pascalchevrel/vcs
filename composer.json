@@ -1,0 +1,23 @@
+{
+    "name": "pascalc/vcs",
+    "description": "Simple wrapper to log command for git/hg/svn",
+    "keywords": ["git", "svn", "hg", "mercurial", "hg"],
+    "homepage": "http://www.github.com/pascalchevrel/vcs",
+    "license": "MPL 2",
+    "authors": [
+        {
+            "name": "Pascal Chevrel",
+            "email": "pascal.chevrel@free.fr",
+            "homepage": "http://chevrel.org",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "VCS": "src/"
+        }
+    }
+}
