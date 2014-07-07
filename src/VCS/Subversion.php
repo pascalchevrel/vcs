@@ -44,4 +44,9 @@ class Subversion extends Base
 
         return $commits;
     }
+
+    public function update()
+    {
+        $this->execute('svn update');
+    }
 }

@@ -11,5 +11,11 @@ class Git extends Base
 
         return $this->parseLog($log);
     }
+
+    public function pull()
+    {
+        $this->execute('git fetch --all');
+        $this->execute('git pull --all');
+    }
 }
 

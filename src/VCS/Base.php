@@ -5,6 +5,7 @@ use DateTime;
 
 class Base
 {
+    const VERSION = '1.0dev';
     public $repositoryPath;
 
     public function __construct($repositoryPath)
@@ -12,30 +13,18 @@ class Base
         $this->repositoryPath = realpath($repositoryPath);
     }
 
-    protected function execute($command)
-    {
-        $cwd = getcwd();
-        chdir($this->repositoryPath);
-        exec($command, $output, $returnCode);
-        chdir($cwd);
-
-        if ($returnCode !== 0) {
-            error_log("Error with command {$command} launched in {$this->repositoryPath}");
-        }
-
-        return $output;
-    }
 
     public function parseLog($log)
     {
         for ($i = 0, $lines = count($log); $i < $lines; $i++) {
             $tmp = explode(': ', $log[$i]);
+            $tmp = array_map('trim', $tmp);
 
-            if (trim($tmp[0]) == 'changeset') {
+            if ($tmp[0] == 'changeset') {
                 $commit = trim($tmp[1]);
             }
 
-            if (trim($tmp[0]) == 'user') {
+            if ($tmp[0] == 'user') {
                 if (! strstr($tmp[1], '@')) {
                 // No email in User field
                     $author = $tmp[1];
@@ -67,11 +56,11 @@ class Base
                 $author = trim($author);
             }
 
-            if (trim($tmp[0]) == 'date') {
+            if ($tmp[0] == 'date') {
                 $date = trim($tmp[1]);
             }
 
-            if (trim($tmp[0]) == 'summary') {
+            if ($tmp[0] == 'summary') {
                 $summary = trim($tmp[1]);
 
                 $commits[] = [
@@ -85,5 +74,19 @@ class Base
         }
 
         return $commits;
+    }
+
+    protected function execute($command)
+    {
+        $cwd = getcwd();
+        chdir($this->repositoryPath);
+        exec($command, $output, $returnCode);
+        chdir($cwd);
+
+        if ($returnCode !== 0) {
+            error_log("Error with command {$command} launched in {$this->repositoryPath}");
+        }
+
+        return $output;
     }
 }

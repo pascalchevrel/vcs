@@ -9,4 +9,11 @@ class Mercurial extends Base
 
         return $this->parseLog($log);
     }
+
+    public function update()
+    {
+        $this->execute('hg pull -r default');
+        $this->execute('hg update -C');
+
+    }
 }
