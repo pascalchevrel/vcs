@@ -39,11 +39,11 @@ var_dump($svn->getCommits());
 ```php
 [
     0 => [
-        ["commit"]  => (string) "116254",
-        ["author"]  => (string) "Joe Bar",
-        ["email"]   => (string) "joe@bar.com",
-        ["date"]    => (object) DateTime(),
-        ["summary"] => (string) "Commit summary field",
+        ['commit']  => (string) '116254',
+        ['author']  => (string) 'Joe Bar',
+        ['email']   => (string) 'joe@bar.com',
+        ['date']    => (object) DateTime(),
+        ['summary'] => (string) 'Commit summary field'
     ],
 ]
 ```
@@ -58,5 +58,5 @@ The `date` is the commit date as a DateTime object with the same formatting for 
 
 The `summary` is the first line of the commit message.
 
-Note that Subversion being a centralized VCS, it doesn't keep any local history and needs an active internet connection to get the log from the remote server. For that reason it is a good idea to cache that data in case that this connection cannot be established and to avoid overloading the remote subversion server.
+Note that Subversion being a centralized VCS, it doesn't keep any local history and needs an active internet connection to get the log from the remote server. For that reason it is a good idea to cache that data in case a connection cannot be established and to avoid overloading the remote subversion server.
 
