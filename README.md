@@ -2,7 +2,9 @@
 
 PHP library to make it easier to get data from various version control systems used at Mozilla.
 
-Curretly, its only feature is to extract commit data from Subversion/Git/Mercurial repositories via the `svn|git|hg log` command and return that data with the same structure (so data extracted from these logs can be more easily merged/compared).
+Curretly, its only features are:
+- Extract commit data from Subversion/Git/Mercurial repositories via the `svn|git|hg log` command and return that data with the same structure (so data extracted from these logs can be more easily merged/compared).
+- Run an update command on the repository
 
 ###Installable via Composer:
 ```json
@@ -44,6 +46,7 @@ var_dump($svn->getCommits());
         ['email']   => (string) 'joe@bar.com',
         ['date']    => (object) DateTime(),
         ['summary'] => (string) 'Commit summary field'
+        ['vcs']     => (string) 'hg'
     ],
 ]
 ```
@@ -57,6 +60,8 @@ The `email` field is the email used to commit, if the email was not in the log (
 The `date` is the commit date as a DateTime object with the same formatting for all repositories.
 
 The `summary` is the first line of the commit message.
+
+The `vcs` is the type of Version Control System the commit was done on. The possible values are `svn`, `hg` and `git`.
 
 Note that Subversion being a centralized VCS, it doesn't keep any local history and needs an active internet connection to get the log from the remote server. For that reason it is a good idea to cache that data in case a connection cannot be established and to avoid overloading the remote subversion server.
 

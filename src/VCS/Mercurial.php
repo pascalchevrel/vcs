@@ -6,6 +6,7 @@ class Mercurial extends Base
     public function getCommits()
     {
         $log = $this->execute('hg log');
+        $this->repository_type = 'hg';
 
         return $this->parseLog($log);
     }
@@ -17,3 +18,4 @@ class Mercurial extends Base
 
     }
 }
+;

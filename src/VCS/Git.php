@@ -8,6 +8,7 @@ class Git extends Base
         $log = $this->execute(
             "git log --no-merges --format='changeset: %H%nuser: %aN <%aE>%ndate: %ad%nsummary: %s%n'"
         );
+        $this->$repository_type = 'git';
 
         return $this->parseLog($log);
     }

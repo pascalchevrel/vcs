@@ -7,9 +7,8 @@ class Subversion extends Base
 {
     public function getCommits()
     {
-        $log = $this->execute(
-            'svn log'
-        );
+        $log = $this->execute('svn log');
+        $this->repository_type = 'svn';
 
         return $this->parseLog($log);
     }
@@ -38,6 +37,7 @@ class Subversion extends Base
                     'email'   => $tmp[1],
                     'date'    => DateTime::createFromFormat('Y-m-d H:i:s O', $date),
                     'summary' => $log[$i+1],
+                    'vcs'     => $this->repository_type,
                 ];
             }
         }

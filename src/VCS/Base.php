@@ -5,14 +5,13 @@ use DateTime;
 
 class Base
 {
-    const VERSION = '1.0dev';
-    public $repositoryPath;
+    public $repository_path;
+    public $repository_type;
 
-    public function __construct($repositoryPath)
+    public function __construct($repository_path)
     {
-        $this->repositoryPath = realpath($repositoryPath);
+        $this->repository_path = realpath($repository_path);
     }
-
 
     public function parseLog($log)
     {
@@ -68,7 +67,8 @@ class Base
                     'author'  => $author,
                     'email'   => $email,
                     'date'    => DateTime::createFromFormat('D M j H:i:s Y O', $date),
-                    'summary' => $summary
+                    'summary' => $summary,
+                    'vcs'     => $this->repository_type,
                 ];
             }
         }
@@ -79,12 +79,12 @@ class Base
     protected function execute($command)
     {
         $cwd = getcwd();
-        chdir($this->repositoryPath);
-        exec($command, $output, $returnCode);
+        chdir($this->repository_path);
+        exec($command, $output, $return_code);
         chdir($cwd);
 
-        if ($returnCode !== 0) {
-            error_log("Error with command {$command} launched in {$this->repositoryPath}");
+        if ($return_code !== 0) {
+            error_log("Error with command {$command} launched in {$this->repository_path}");
         }
 
         return $output;
