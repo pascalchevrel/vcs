@@ -31,6 +31,11 @@ $hg  = new Mercurial('/path/to/hg/repo');
 $git = new Git('/path/to/git/repo');
 $svn = new Subversion('/path/to/svn/repo');
 
+// Update local repos from remote server
+$hg->update();
+$git->update();
+$svn->update();
+
 // Dump all the commits extracted
 var_dump($hg->getCommits());
 var_dump($git->getCommits());
