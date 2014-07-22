@@ -32,6 +32,8 @@ class Base
      */
     public function parseLog($log)
     {
+        $commits = [];
+
         for ($i = 0, $lines = count($log); $i < $lines; $i++) {
             $tmp = explode(': ', $log[$i]);
             $tmp = array_map('trim', $tmp);
