@@ -5,6 +5,11 @@ use DateTime;
 
 class Subversion extends Base
 {
+    /**
+     * Get the list of Subversion commits for the repository as a structured array
+     *
+     * @return array List of commits
+     */
     public function getCommits()
     {
         $log = $this->execute('svn log');
@@ -13,6 +18,11 @@ class Subversion extends Base
         return $this->parseLog($log);
     }
 
+    /**
+     * Override the parseLog() command in Base.php to match svn log format
+     *
+     * @return array Commits as a structure array
+     */
     public function parseLog($log)
     {
         $commits = [];
@@ -26,6 +36,7 @@ class Subversion extends Base
             if (! strncmp($log[$i], '----', strlen('----'))) {
                 continue;
             }
+
             // Line starts with r and has pipes (|), it contains data
             if (! strncmp($log[$i], 'r', strlen('r')) && strstr($log[$i], '|')) {
                 $tmp  = explode('|', $log[$i]);
@@ -45,6 +56,11 @@ class Subversion extends Base
         return $commits;
     }
 
+    /**
+     * Do a "svn update" command
+     *
+     * @return void
+     */
     public function update()
     {
         $this->execute('svn update');
