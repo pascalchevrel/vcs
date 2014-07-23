@@ -10,7 +10,7 @@ class Mercurial extends Base
      */
     public function getCommits()
     {
-        $log = $this->execute('hg log');
+        $log = $this->execute('hg log --config ui.verbose=false');
         $this->repository_type = 'hg';
 
         return $this->parseLog($log);
