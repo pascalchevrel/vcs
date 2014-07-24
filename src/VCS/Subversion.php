@@ -43,7 +43,7 @@ class Subversion extends Base
                 $tmp  = array_map('trim', $tmp);
                 $date = trim(preg_replace('~\(([:alpha]*.+)\)~i', '', $tmp[2]));
                 $commits[] = [
-                    'commit'  => ltrim($tmp[0],'r'),
+                    'commit'  => ltrim($tmp[0], 'r'),
                     'author'  => $tmp[1],
                     'email'   => $tmp[1],
                     'date'    => DateTime::createFromFormat('Y-m-d H:i:s O', $date),

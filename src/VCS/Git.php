@@ -28,4 +28,3 @@ class Git extends Base
         $this->execute('git pull --all');
     }
 }
-
