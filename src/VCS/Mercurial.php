@@ -49,7 +49,7 @@ class Mercurial extends Base
     }
 
     /**
-     * Revert a file to a particular revision.
+     * Revert a file to a specific revision.
      *
      * @param String $rev A valid changeset for this repo
      * @param String $path The path of a file
@@ -57,5 +57,23 @@ class Mercurial extends Base
      */
     public function revertFile($rev, $path) {
         $this->execute("hg revert -r {$rev} {$path}");
+    }
+
+    /**
+     * Revert a repo to a specific revision.
+     *
+     * @param String $rev A valid changeset for this repo
+     * @return void
+     */
+    public function revertRepo($rev) {
+        $this->execute("hg update -r {$rev}");
+    }
+
+    /**
+     * Get the latest changeset hash of the repo
+     * @return String Hash of the current changeset
+     */
+    public function getLatestChangeset() {
+        return $this->execute('hg id -i');
     }
 }
