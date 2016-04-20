@@ -17,6 +17,20 @@ class Mercurial extends Base
     }
 
     /**
+     * Get the list of Mercurial commits for the repository as a structured array
+     * since a specific revision
+     *
+     * @return array List of commits
+     */
+    public function getCommitsSince($rev)
+    {
+        $log = $this->execute("hg log -r tip:{$rev} --config ui.verbose=false");
+        $this->repository_type = 'hg';
+
+        return $this->parseLog($log);
+    }
+
+    /**
      * Get the list of files changed with the type of change for a given revision.
      * Results are returned as a structured array.
      *
@@ -74,6 +88,6 @@ class Mercurial extends Base
      * @return String Hash of the current changeset
      */
     public function getLatestChangeset() {
-        return $this->execute('hg id -i');
+        return $this->execute('hg id -i')[0];
     }
 }
