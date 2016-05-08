@@ -32,7 +32,7 @@ class Base
      */
     public function parseLog($log)
     {
-        $commits = [];
+        $commits = $tags = [];
 
         for ($i = 0, $lines = count($log); $i < $lines; $i++) {
             $tmp = explode(': ', $log[$i]);
@@ -51,6 +51,10 @@ class Base
                 $date = trim($tmp[1]);
             }
 
+            if ($tmp[0] == 'tag') {
+                $tags[] = trim($tmp[1]);
+            }
+
             if ($tmp[0] == 'summary') {
                 $commits[] = [
                     'commit'  => trim($commit),
@@ -58,8 +62,10 @@ class Base
                     'email'   => trim($email),
                     'date'    => DateTime::createFromFormat('D M j H:i:s Y O', $date),
                     'summary' => trim($tmp[1]),
+                    'tags'    => $tags,
                     'vcs'     => trim($this->repository_type),
                 ];
+                $tags = [];
             }
         }
 
